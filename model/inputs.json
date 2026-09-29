@@ -1,0 +1,16 @@
+{
+  "source": "https://investors.gxo.com/news-releases/news-release-details/gxo-reports-fourth-quarter-and-full-year-2025-results",
+  "source_date": "2026-02-10",
+  "prepared": "2026-09-28",
+  "basis": "Retrospective FY2025-based educational valuation. Year 0 = Dec 31 2025, using the subsequently published FY2025 release. Not a contemporaneous trading backtest or current price target.",
+  "historical": {
+    "2024": {"revenue":11709,"adjusted_ebitda":815,"operating_income":218,"da":415,"ocf":549,"capex":359,"asset_sales":61,"company_fcf":251,"cash":413,"debt":2631,"nci":32,"shares":119.496},
+    "2025": {"revenue":13178,"adjusted_ebitda":881,"operating_income":245,"da":457,"ocf":434,"capex":324,"asset_sales":149,"company_fcf":259,"cash":854,"debt":3065,"nci":32,"shares":114.512}
+  },
+  "assumptions": {"risk_free":0.0425,"beta":1.2,"equity_risk_premium":0.05,"debt_weight":0.25,"cost_of_debt":0.06,"tax_rate":0.25,"terminal_growth":0.025,"terminal_roic":0.10,"da_ratio":0.03,"opening_nwc_ratio":0.05,"required_cash":200,"exit_multiple":8.5},
+  "cases": {
+    "Base":{"growth":[0.05,0.05,0.05,0.05,0.05],"margin_uplift":[0.001,0.002,0.003,0.004,0.005],"cost_haircut":0.005,"capex_ratio":0.025,"nwc_ratio":0.05},
+    "Downside":{"growth":[-0.05,0,0.02,0.02,0.02],"margin_uplift":[-0.0075,-0.005,-0.0025,0,0],"cost_haircut":0.0075,"capex_ratio":0.03,"nwc_ratio":0.06},
+    "Upside":{"growth":[0.07,0.07,0.06,0.06,0.05],"margin_uplift":[0.002,0.004,0.006,0.008,0.01],"cost_haircut":0.005,"capex_ratio":0.028,"nwc_ratio":0.05}
+  }
+}

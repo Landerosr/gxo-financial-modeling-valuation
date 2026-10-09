@@ -57,7 +57,7 @@ python3 model/valuation.py
 python3 -m unittest discover -s model -v
 ```
 
-Edit `model/inputs.json` before rerunning Python. Excel and JSON are separate editable interfaces; changes do not synchronize automatically. `model/build_workbook.mjs` regenerates Excel and previews where the OpenAI Artifact Tool runtime is available; it is not needed to use Excel or reproduce the Python calculations.
+Edit `model/inputs.json` before rerunning Python. Excel and JSON are separate editable interfaces; changes do not synchronize automatically. `model/build_workbook.mjs` regenerates Excel and previews with its required `@oai/artifact-tool` dependency installed; it is not needed to use Excel or reproduce the Python calculations.
 
 Validation includes six unit tests, independent Python/Excel calculation reconciliation across all three cases, WACC sensitivity, and a check that the sensitivity center matches the base valuation. [Validation details](research/validation.md).
 

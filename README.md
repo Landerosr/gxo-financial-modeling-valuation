@@ -1,6 +1,27 @@
-# GXO Logistics: Financial Modeling and Valuation
+# Quantitative Valuation: GXO Cash-Flow Modeling and Sensitivity Analysis
 
-A five-year discounted cash flow case study connecting operating assumptions, reinvestment needs, cost of capital, and equity value. Includes an editable Excel model and an independently calculated Python version.
+A five-year discounted cash flow case study connecting operating assumptions,
+reinvestment needs, cost of capital and equity value. Includes an editable Excel
+model and an independently calculated Python version.
+
+## Quantitative methods and theory
+
+| Method or theory | Model application |
+|---|---|
+| Time value of money | Discount explicit forecast free cash flows and terminal value to the valuation date |
+| Capital Asset Pricing Model | Cost of equity = risk-free rate + beta × equity risk premium |
+| Weighted Average Cost of Capital | Combine assumed equity cost and after-tax debt cost using target capital weights |
+| Unlevered free cash flow | NOPAT + depreciation and amortization − capital expenditure − change in working capital |
+| Sustainable growth and reinvestment | Terminal reinvestment rate = terminal growth / terminal return on invested capital |
+| Perpetual-growth valuation | Terminal value = next-period terminal free cash flow / (WACC − terminal growth) |
+| Scenario and sensitivity analysis | Compare three operating cases, a WACC/growth grid and an alternative exit multiple |
+
+The implementation is in [model/valuation.py](model/valuation.py), with explicit
+inputs in [model/inputs.json](model/inputs.json) and
+[unit tests](model/test_valuation.py). This is a deterministic financial model:
+the scenarios have no assigned probabilities and are not confidence intervals.
+Beta, risk premium, capital weights and forecast drivers are assumptions, not
+econometric estimates fitted by this repository.
 
 **[Download the Excel model](GXO_Valuation.xlsx)** · **[Read the valuation memo](research/valuation-memo.md)** · **[Review assumptions and sources](research/methodology.md)**
 

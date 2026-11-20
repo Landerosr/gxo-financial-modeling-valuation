@@ -1,43 +1,12 @@
-# Quantitative Valuation: GXO Cash-Flow Modeling and Sensitivity Analysis
+# GXO Logistics: Cash-Flow Valuation and Terminal Sensitivity
 
-A five-year discounted cash flow case study connecting operating assumptions,
-reinvestment needs, cost of capital and equity value. Includes an editable Excel
-model and an independently calculated Python version.
+**Research question.** How much of GXO's estimated equity value depends on near-term operating performance, and how much depends on assumptions about cash generation after the five-year forecast?
 
-## Quantitative methods and theory
+[Excel model](GXO_Valuation.xlsx) · [Valuation memo](research/valuation-memo.md) · [Methods and inputs](research/methodology.md) · [Validation notes](research/validation.md)
 
-| Method or theory | Model application |
-|---|---|
-| Time value of money | Discount explicit forecast free cash flows and terminal value to the valuation date |
-| Capital Asset Pricing Model | Cost of equity = risk-free rate + beta × equity risk premium |
-| Weighted Average Cost of Capital | Combine assumed equity cost and after-tax debt cost using target capital weights |
-| Unlevered free cash flow | NOPAT + depreciation and amortization − capital expenditure − change in working capital |
-| Sustainable growth and reinvestment | Terminal reinvestment rate = terminal growth / terminal return on invested capital |
-| Perpetual-growth valuation | Terminal value = next-period terminal free cash flow / (WACC − terminal growth) |
-| Scenario and sensitivity analysis | Compare three operating cases, a WACC/growth grid and an alternative exit multiple |
+## Findings
 
-The implementation is in [model/valuation.py](model/valuation.py), with explicit
-inputs in [model/inputs.json](model/inputs.json) and
-[unit tests](model/test_valuation.py). This is a deterministic financial model:
-the scenarios have no assigned probabilities and are not confidence intervals.
-Beta, risk premium, capital weights and forecast drivers are assumptions, not
-econometric estimates fitted by this repository.
-
-**[Download the Excel model](GXO_Valuation.xlsx)** · **[Read the valuation memo](research/valuation-memo.md)** · **[Review assumptions and sources](research/methodology.md)**
-
-![Excel valuation summary](assets/summary.png)
-
-## Research question
-
-How sensitive is the value of a contract-logistics business to margin improvement, cash reinvestment, and the assumptions used to value cash flows after the explicit forecast?
-
-## Scope and date
-
-Prepared September 28, 2026. This is a **retrospective FY2025-based educational case study**, using financial information published February 10, 2026. The calculation anchors at December 31, 2025, with illustrative 2026–2030 forecasts. It is not a real-time backtest, current price target, or investment recommendation. Later 2026 results are outside this deliberately fixed scope.
-
-Historical financial inputs are reported data. Forecasts, discount-rate inputs, terminal ROIC, required cash, and the exit multiple are explicitly assumed. There is no live market-price comparison.
-
-## Results under the stated assumptions
+The base discounted cash flow values GXO at **$25.94 per year-end basic share** under the assumptions below. Discounted terminal value accounts for **68.6% of base enterprise value**. Applying an assumed **8.5× Year-5 adjusted EBITDA** exit multiple instead gives **$52.33 per basic share**. The alternative is a sensitivity check, not independent support for the higher value: the multiple was not estimated from peers. Reconciling the implied long-run growth, return on capital, and cash conversion matters more than averaging the two outputs.
 
 | Output | Downside | Base | Upside |
 |---|---:|---:|---:|
@@ -45,47 +14,31 @@ Historical financial inputs are reported data. Forecasts, discount-rate inputs, 
 | Equity value ($m) | 752.0 | 2,970.0 | 3,712.1 |
 | Value per year-end basic share | $6.57 | $25.94 | $32.42 |
 
-These are operating scenarios, not confidence intervals. The base case uses **8.8125% WACC**, **2.5% terminal growth**, and **10% terminal ROIC**. Terminal value represents **68.6%** of base-case enterprise value.
+The operating scenarios share a common discount rate and have no assigned probabilities. They are conditional estimates, not confidence intervals.
 
-An alternative, assumed **8.5x terminal EBITDA multiple** produces **$52.33 per basic share**, versus **$25.94** using reinvestment-linked perpetual growth. That difference is the main analytical finding: the exit assumption materially changes the answer and needs independent support. The 8.5x multiple is not a peer-derived market valuation.
+## Study design
 
-## What the model demonstrates
+This is a retrospective FY2025 educational case study prepared September 28, 2026. It uses [GXO's February 10, 2026 earnings release](https://investors.gxo.com/news-releases/news-release-details/gxo-reports-fourth-quarter-and-full-year-2025-results) and anchors valuation at December 31, 2025, with illustrative forecasts for 2026–2030. Reported financial inputs and assumed drivers are recorded separately. Later disclosures and live market prices are outside the scope.
 
-- Five-year revenue, margin, tax, capex, and working-capital forecasts.
-- Conversion of operating earnings into unlevered free cash flow.
-- CAPM cost of equity and target-weighted WACC.
-- Terminal reinvestment tied to growth and return on invested capital.
-- Enterprise-to-equity bridge, including excess cash, debt, and minority interests.
-- Base/downside/upside selection and 25 WACC/growth sensitivities.
-- Alternative exit-multiple terminal valuation and explicit limitations.
+1. **Cash conversion.** Forecast revenue, margins, tax, capex, and operating working capital. Free cash flow to the firm is after-tax operating profit plus depreciation and amortization, less capex and the increase in operating working capital. Future asset-sale proceeds are excluded from recurring cash flow; the historical bridge separately reconciles company-defined free cash flow.
+2. **Discount rate.** Use CAPM for the cost of equity and combine it with after-tax debt cost using assumed target capital weights. The base WACC is **8.8125%**. Beta, risk premium, debt cost, and capital weights are assumptions, not estimates fitted here.
+3. **Terminal economics.** Use **2.5% long-run growth** and **10% terminal return on invested capital**. Reinvesting growth divided by return on capital implies 25% of terminal after-tax operating profit is reinvested. The model discounts the explicit cash flows and the perpetuity value, then adds excess cash and subtracts debt and minority interests to bridge to equity. The workbook also includes 25 WACC/growth sensitivities.
 
-## Use the workbook
+## Reproduce and review
 
-1. Open `GXO_Valuation.xlsx` and start on **Summary**.
-2. Change **Drivers!D5** to `1` (Base), `2` (Downside), or `3` (Upside).
-3. Blue cells are editable assumptions or reported source inputs. Green formulas link between sheets.
-4. Follow **DCF** to trace each calculation. **History** contains reported inputs and their source.
-5. Keep WACC above terminal growth and terminal growth below terminal ROIC.
+Open the workbook on **Summary**. Use `Drivers!D5` to select `1` (Base), `2` (Downside), or `3` (Upside). Blue cells contain editable assumptions or historical inputs; green formulas link across sheets. **History** identifies source inputs and **DCF** shows the calculation. Keep WACC above terminal growth, and terminal growth below terminal return on capital.
 
-The workbook is formula-driven. The README, memo, JSON results, and PNG previews are the original publication snapshot and do not update when you edit Excel.
-
-## Reproduce and test
-
-Python 3, standard library only:
+The separate Python implementation uses only the standard library. Change [model/inputs.json](model/inputs.json) to test assumptions; Excel and JSON inputs are not synchronized.
 
 ```bash
 python3 model/valuation.py
 python3 -m unittest discover -s model -v
 ```
 
-Edit `model/inputs.json` before rerunning Python. Excel and JSON are separate editable interfaces; changes do not synchronize automatically. `model/build_workbook.mjs` regenerates Excel and previews with its required `@oai/artifact-tool` dependency installed; it is not needed to use Excel or reproduce the Python calculations.
+The [Python model](model/valuation.py) and [six unit tests](model/test_valuation.py) support checks of cash-flow reconciliation, equity-bridge arithmetic, sensitivity direction, and the terminal assumptions. Python and workbook calculations were reconciled across all three cases; the workbook was recalculated with Artifact Tool, not separately tested in native Excel. The included memo and workbook preview reflect the original inputs. [Workbook builder](model/build_workbook.mjs) is optional and requires `@oai/artifact-tool` to regenerate Excel and previews.
 
-Validation includes six unit tests, independent Python/Excel calculation reconciliation across all three cases, WACC sensitivity, and a check that the sensitivity center matches the base valuation. [Validation details](research/validation.md).
-
-## Source
-
-[GXO FY2025 results release](https://investors.gxo.com/news-releases/news-release-details/gxo-reports-fourth-quarter-and-full-year-2025-results), consolidated financial statements and reconciliations. Period-end shares are converted from thousands to millions. See the [methodology](research/methodology.md) for field definitions and adjustments.
+![Workbook valuation summary](assets/summary.png)
 
 ## Limitations
 
-This is a focused operating DCF, not an integrated three-statement model or completed buy-side diligence. It does not include a comparable-company study, purchase accounting, pension adjustments, detailed lease schedules, future share dilution, or a current trading recommendation. Cash, debt, minority interests, and tax treatment require refinement before professional transaction use.
+This is an operating DCF, not an integrated three-statement model or a current price target. There is no peer analysis, detailed lease or pension schedule, or forecast of future share dilution. Required cash, tax treatment, and the enterprise-to-equity bridge are simplified. Reconciliation verifies the mechanics, not the future assumptions. This is research and portfolio work, not an investment recommendation.
